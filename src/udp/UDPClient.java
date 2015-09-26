@@ -19,6 +19,12 @@ public class UDPClient {
 	 * @param args
 	 */
 	public static void main(String args[]) {
+		if(args.length != 2){
+			System.out.println("You should give two arguments : the hostname/IP adress and the port number.");
+			return;
+		}
+		
+		
 		DatagramSocket aSocket = null;
 		try {
 			aSocket = new DatagramSocket();

@@ -10,6 +10,11 @@ import serialisation.SerialiseToByteArray;
 
 public class UDPServer {
 	public static void main(String args[]) {
+		if(args.length != 1){
+			System.out.println("You should give one argument corresponding to the port number of the listening server.");
+			return;
+		}
+		
 		DatagramSocket aSocket = null;
 		try {
 			int portNumber = Integer.parseInt(args[0]);
