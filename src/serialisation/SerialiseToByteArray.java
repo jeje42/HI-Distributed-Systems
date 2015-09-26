@@ -22,6 +22,6 @@ public class SerialiseToByteArray {
 	}
 	
 	public static int sizeOfPersonMessage(){
-		return buildBAOutputStream(new Person("Smith", "London", 1934)).length;
+		return buildBAOutputStream(new Person(new String(new byte[20],0,20), new String(new byte[300],0,300), 1934)).length;
 	}
 }
