@@ -4,10 +4,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import serialisation.DeserialiseFromByteArray;
 import serialisation.Person;
 import serialisation.SerialisationFramework;
-import serialisation.SerialiseToByteArray;
 
 public class UDPServer {
 	public static void main(String args[]) {
@@ -18,28 +16,37 @@ public class UDPServer {
 		
 		DatagramSocket aSocket = null;
 		SerialisationFramework serialisationFramework = new SerialisationFramework();
+		
 		try {
 			int portNumber = Integer.parseInt(args[0]);
 			aSocket = new DatagramSocket(portNumber);
 			
+			/**
+			 * buffer to fill the request
+			 */
 			byte[] buffer = new byte[serialisationFramework.sizeOfPersonMessage()];
 			
 			System.out.println("Listening on port " + portNumber);
+			
+			/**
+			 * Listening loop
+			 */
 			while (true) {
-				DatagramPacket request = new DatagramPacket(buffer,
-						buffer.length);
+				/**
+				 * Request we can expect to receive.
+				 */
+				DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+				
 				aSocket.receive(request);
 				
-				Person personneReceived = serialisationFramework.readFromByteArray(request.getData());
+				/**
+				 * Deserialize the information received
+				 */
+				Person personneReceived = (Person)serialisationFramework.readFromByteArray(request.getData());
+				
+				
 				System.out.println(personneReceived);
 				
-				
-				/*
-				DatagramPacket reply = new DatagramPacket(request.getData(),
-						request.getLength(), request.getAddress(), request
-								.getPort());
-				aSocket.send(reply);
-				*/
 			}
 		} catch (SocketException e) {
 			System.out.println("Socket: " + e.getMessage());
