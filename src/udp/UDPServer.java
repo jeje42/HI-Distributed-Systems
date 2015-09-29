@@ -6,6 +6,7 @@ import java.net.SocketException;
 
 import serialisation.DeserialiseFromByteArray;
 import serialisation.Person;
+import serialisation.SerialisationFramework;
 import serialisation.SerialiseToByteArray;
 
 public class UDPServer {
@@ -16,11 +17,12 @@ public class UDPServer {
 		}
 		
 		DatagramSocket aSocket = null;
+		SerialisationFramework serialisationFramework = new SerialisationFramework();
 		try {
 			int portNumber = Integer.parseInt(args[0]);
 			aSocket = new DatagramSocket(portNumber);
 			
-			byte[] buffer = new byte[SerialiseToByteArray.sizeOfPersonMessage()];
+			byte[] buffer = new byte[serialisationFramework.sizeOfPersonMessage()];
 			
 			System.out.println("Listening on port " + portNumber);
 			while (true) {
@@ -28,7 +30,7 @@ public class UDPServer {
 						buffer.length);
 				aSocket.receive(request);
 				
-				Person personneReceived = DeserialiseFromByteArray.readFromByteArray(request.getData());
+				Person personneReceived = serialisationFramework.readFromByteArray(request.getData());
 				System.out.println(personneReceived);
 				
 				

@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 import serialisation.Person;
+import serialisation.SerialisationFramework;
 import serialisation.SerialiseToByteArray;
 
 public class UDPClient {
@@ -26,13 +27,15 @@ public class UDPClient {
 		
 		
 		DatagramSocket aSocket = null;
+		SerialisationFramework serialisationFramework = new SerialisationFramework();
+		
 		try {
 			aSocket = new DatagramSocket();
 			InetAddress aHost = InetAddress.getByName(args[0]);
 			int serverPort = Integer.parseInt(args[1]);
 			
 			Person person = new Person("Smithe", "London", 1934);
-			byte[] message = SerialiseToByteArray.buildBAOutputStream(person);
+			byte[] message = serialisationFramework.buildBAnOutputStream(person);
 			
 			DatagramPacket request = new DatagramPacket(message, message.length, aHost, serverPort);
 			aSocket.send(request);
