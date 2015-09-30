@@ -11,7 +11,7 @@ java -cp ./ udp.UDPClient serverAdress portNumber
 
 ### Answer for part 2 :	###
 
-If no server is running, when can see that the client does not react.
+If no server is running, we can see the client does not react.
 This is what was expected using a UDP-based communication where the communication only takes place from the sender to the receiver.
 The sender does not receives any confirmation whatever the message has been received or not.
 
